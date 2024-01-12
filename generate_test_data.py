@@ -4,9 +4,9 @@ import string
 
 def generate_random_row(row_number):
     # Generate a random string of characters with a length of 1000
-    random_characters = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(1000))
+    random_characters = ''.join(random.choice(string.ascii_letters) for _ in range(1000))
     # Concatenate the row number at the start and end of the random string, for a future debugging and testing
-    return f"{row_number} {random_characters} {row_number}\n"
+    return f"{row_number}{random_characters}{row_number}\n"
 
 def create_file(folder_path):
     # Check if the folder exists
