@@ -17,7 +17,7 @@ def search_insert_position(arr, x):
     # Initialize low and high indices for binary search
     low, high = 0, len(arr) - 1
 
-    # Binary search algorithm, because log n
+    # Binary search algorithm, because input is sorted
     while low <= high:
         # Calculate mid index
         mid = (low + high) // 2
@@ -33,7 +33,28 @@ def search_insert_position(arr, x):
     return low
 
 # Example usage:
-arr = array.array('i', [1, 2, 4, 4, 5, 6, 7, 7, 7])
+arr = array.array('i', [1, 4, 4, 4, 4, 4, 4, 4, 7])
+x = 4
+result = search_insert_position(arr, x)
+assert result == 1,f"expected 1, got {result}"
+
+arr = array.array('i', [1, 1, 3, 4, 5, 6, 7, 7, 7])
+x = 1
+result = search_insert_position(arr, x)
+assert result == -1,f"expected -1, got {result}"
+
+arr = array.array('i', [1, 1, 3, 4, 5, 6, 7, 7, 7])
 x = 7
 result = search_insert_position(arr, x)
-print(result)
+assert result == 6,f"expected 6, got {result}"
+
+arr = array.array('i', [1, 1, 3, 4, 5, 6, 7, 7, 7])
+x = 8
+result = search_insert_position(arr, x)
+assert result == -1,f"expected -1, got {result}"
+
+arr = array.array('i', [1, 1, 3, 4, 5, 6, 7, 7, 7])
+x = 5
+result = search_insert_position(arr, x)
+assert result == 4, f"expected 4, got {result}"
+
