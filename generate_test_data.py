@@ -32,8 +32,6 @@ def create_file(folder_path):
 
     print(f"File 'test_data.txt' created successfully at '{file_path}'.")
 
-
-
 if __name__ == "__main__":
     folder_path = input("Enter the folder path: ")
     create_file(folder_path)
