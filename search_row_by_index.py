@@ -1,4 +1,5 @@
 import os
+import platform
 '''
 Input file contains only a plain text(assume UTF-8), limited by 1 billion rows, 1000(1 for new line char) charactes per row.
 Max size will be 1001 * 1,000,000,000 = 1,001,000,000,000 or ~1TB.
@@ -6,22 +7,30 @@ Generated index file would have significant size.
 To avoid read whole file to the memmory and optimize index row seek each line would have fixed size of 13 digits.
 Index file expected to be ~14GB, 1,000,000,000 * 14 bytes.
 '''
+INDEX_ROW_LEN = 13
+LINE_SEPARATOR = '\n'
+IS_WIN = platform.system()
+# Line separator constan was addd because was found that due to different default line separator on different os solution could have issues with offset.
+
 def build_index(input_file, index_file):
     # Create the offset index
     with open(input_file, 'r', encoding='utf-8') as f_input, open(index_file, 'w', encoding='utf-8') as f_index:
         offset = 0
         # Offset is lenth in bytes to skip before the requested row
         for line in f_input:
-            f_index.write(f"{offset}{os.linesep}".zfill(14))
-            offset += len(line.encode('utf-8')) + 1
+            f_index.write(f"{str(offset).zfill(INDEX_ROW_LEN)}{LINE_SEPARATOR}")
+            offset += len(line.encode('utf-8')) 
+            if IS_WIN: 
+                # When tested on Windows founded that offset should be +1 due to behaviour of .seek in python.                
+                offset += 1
 
 
-def get_line(input_file, index_file, line_number):
+def get_line(input_file, index_file, line_index):
     with open(index_file, 'r', encoding='utf-8') as f_index:
-        max_lines = os.path.getsize(index_file) // 15
-        if line_number <= 0 or line_number > max_lines:  
-            return ("Line number is out of range.")
-        f_index.seek((line_number-1)*15)
+        max_lines = os.path.getsize(index_file) // (INDEX_ROW_LEN + len(LINE_SEPARATOR))
+        if line_index < 0 or line_index > max_lines:  
+            return ("Line index is out of range.")
+        f_index.seek(line_index*(INDEX_ROW_LEN + len(LINE_SEPARATOR)))
         offset = int(f_index.readline().rstrip())
         with open(input_file, 'r', encoding='utf-8') as f_input:
             f_input.seek(offset)
@@ -43,8 +52,8 @@ if __name__ == "__main__":
         build_index(input_file, index_file)
         print("Index file created.")
 
-    line_number = int(sys.argv[2])
-    line = get_line(input_file, index_file, line_number)
+    line_index = int(sys.argv[2])
+    line = get_line(input_file, index_file, line_index)
     print(line)
 
 

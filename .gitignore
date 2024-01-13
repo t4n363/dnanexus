@@ -2,3 +2,5 @@ test_data.txt
 test_data.txt.index
 bckp__test_data.txt
 bckp__test_data.txt.index
+_search_row_by_index.py
+test_index_search.py
