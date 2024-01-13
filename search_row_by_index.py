@@ -3,8 +3,8 @@ import os
 Input file contains only a plain text(assume UTF-8), limited by 1 billion rows, 1000(1 for new line char) charactes per row.
 Max size will be 1001 * 1,000,000,000 = 1,001,000,000,000 or ~1TB.
 Generated index file would have significant size. 
-To avoid read whole file to the memmory and optimize index row seek each line would have fixed size of 13 digits
-Index file expected to be ~14GB, 1,000,000,000 * 14 bytes 
+To avoid read whole file to the memmory and optimize index row seek each line would have fixed size of 13 digits.
+Index file expected to be ~14GB, 1,000,000,000 * 14 bytes.
 '''
 def build_index(input_file, index_file):
     # Create the offset index
