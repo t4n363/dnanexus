@@ -1,23 +1,23 @@
 import array
 
-# Check for requirement that min element of the array is less then x, and max element of the array is not greater than x, but could be equal
+# Check for requirement that min element of the array is less then x, and max element of the array is less or equal to x
 def search_insert_position(arr, x):
     # Check if the array is empty
     if not arr:
         return -1
 
     # If j = 0, then requirment A[0], ..., A[j - 1] if out of range
-    if x < arr[0]:
+    if x <= arr[0]:
         return -1
 
-    # Check if x is greater than or equal to the maximum value in the array
-    if x >= arr[-1]:
+    # Check if x is greater than the maximum value in the array
+    if x > arr[-1]:
         return -1
 
     # Initialize low and high indices for binary search
     low, high = 0, len(arr) - 1
 
-    # Binary search algorithm because log n
+    # Binary search algorithm, because log n
     while low <= high:
         # Calculate mid index
         mid = (low + high) // 2

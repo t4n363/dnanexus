@@ -8,4 +8,6 @@ When script generate_test_data.py executed, it will prompt to provide folder. Ch
 Description:
 Script efficiently retrieves lines from a large text file using an index. The script generates an index file that stores the starting position (offset) of each line in the input file, and it allows you to quickly retrieve any line by specifying its line number.
 
-3. Binary search - for Problem 2
+3. binary_search_int - for Problem 2
+Description:
+Python implementation of a binary search algorithm with special conditions. The algorithm is designed to find a position `j` in a sorted array `A` such that all elements in the range `A[0]` to `A[j-1]` are strictly less than a target integer `x`, and all elements in the range `A[j]` to `A[n-1]` are greater than or equal to `x`. The solution has a runtime complexity of O(log n).
