@@ -18,7 +18,7 @@ def create_file(folder_path):
     file_path = os.path.join(folder_path, "test_data.txt")
 
     # Restrict the maximum file size to 500MB, to save time on generation and indexing
-    max_file_size = 500 * 1024 * 1024
+    max_file_size = 50 * 1024 * 1024
     current_size = 0
     row_number = 1
 

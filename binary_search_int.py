@@ -33,7 +33,7 @@ def search_insert_position(arr, x):
     return low
 
 # Example usage:
-arr = array.array('i', [1, 2, 4, 4, 5, 6, 7])
+arr = array.array('i', [1, 2, 4, 4, 5, 6, 7, 7, 7])
 x = 7
 result = search_insert_position(arr, x)
 print(result)

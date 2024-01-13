@@ -12,7 +12,7 @@ def build_index(input_file, index_file):
         offset = 0
         # Offset is lenth in bytes to skip before the requested row
         for line in f_input:
-            f_index.write(f"{offset}\n".zfill(14))
+            f_index.write(f"{offset}{os.linesep}".zfill(14))
             offset += len(line.encode('utf-8')) + 1
 
 
@@ -22,10 +22,10 @@ def get_line(input_file, index_file, line_number):
         if line_number <= 0 or line_number > max_lines:  
             return ("Line number is out of range.")
         f_index.seek((line_number-1)*15)
-        offset = int(f_index.readline().rstrip('\n'))
+        offset = int(f_index.readline().rstrip())
         with open(input_file, 'r', encoding='utf-8') as f_input:
             f_input.seek(offset)
-            return f_input.readline().rstrip('\n')
+            return f_input.readline().rstrip()
 
 if __name__ == "__main__":
     import sys
