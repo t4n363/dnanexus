@@ -9,30 +9,24 @@ Index file expected to be ~14GB, 1,000,000,000 * 14 bytes.
 '''
 INDEX_ROW_LEN = 13
 LINE_SEPARATOR = '\n'
-IS_WIN = platform.system()
-# Line separator constan was addd because was found that due to different default line separator on different os solution could have issues with offset.
 
 def build_index(input_file, index_file):
     # Create the offset index
-    with open(input_file, 'r', encoding='utf-8') as f_input, open(index_file, 'w', encoding='utf-8') as f_index:
+    with open(input_file, 'r', encoding='utf-8') as f_input, open(index_file, 'w', encoding='utf-8', newline=LINE_SEPARATOR) as f_index:
         offset = 0
         # Offset is lenth in bytes to skip before the requested row
         for line in f_input:
             f_index.write(f"{str(offset).zfill(INDEX_ROW_LEN)}{LINE_SEPARATOR}")
             offset += len(line.encode('utf-8')) 
-            if IS_WIN: 
-                # When tested on Windows founded that offset should be +1 due to behaviour of .seek in python.                
-                offset += 1
-
 
 def get_line(input_file, index_file, line_index):
-    with open(index_file, 'r', encoding='utf-8') as f_index:
+    with open(index_file, 'r', encoding='utf-8', newline=LINE_SEPARATOR) as f_index:
         max_lines = os.path.getsize(index_file) // (INDEX_ROW_LEN + len(LINE_SEPARATOR))
         if line_index < 0 or line_index > max_lines:  
             return ("Line index is out of range.")
         f_index.seek(line_index*(INDEX_ROW_LEN + len(LINE_SEPARATOR)))
         offset = int(f_index.readline().rstrip())
-        with open(input_file, 'r', encoding='utf-8') as f_input:
+        with open(input_file, 'r', encoding='utf-8', newline=LINE_SEPARATOR) as f_input:
             f_input.seek(offset)
             return f_input.readline().rstrip()
 

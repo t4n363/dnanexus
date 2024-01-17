@@ -20,11 +20,11 @@ def create_file(folder_path):
     file_path = os.path.join(folder_path, "test_data.txt")
 
     # Restrict the maximum file size to 500MB, to save time on generation and indexing
-    max_file_size = 5 * 1024 * 1024
+    max_file_size = 500 * 1024 * 1024
     current_size = 0
     row_number = 1
 
-    with open(file_path, 'w') as file:
+    with open(file_path, 'w', newline='\n' ) as file:
         # Generate rows until the file size reaches the limit
         while current_size < max_file_size:
             row = generate_random_row(row_number)     
